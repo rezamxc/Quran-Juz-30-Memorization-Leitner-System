@@ -31,9 +31,9 @@ jobs:
         cp pubspec.yaml ../backup/
         cp -r lib ../backup/
 
-    # ساخت فایل‌های سیستمی و گریدل اندروید به صورت خودکار در سرور گیت‌هاب
+    # ساخت فایل‌های سیستمی و گریدل اندروید به صورت خودکار با تعریف نام استاندارد پروژه
     - name: Recreate Android Platform Files
-      run: flutter create --platforms=android --org com.rezamxc .
+      run: flutter create --platforms=android --org com.rezamxc --project-name quran_leitner_app .
 
     # بازگردانی فایل‌های اختصاصی شما روی کدهای سیستمی خام
     - name: Restore Custom Files
@@ -73,9 +73,9 @@ jobs:
         Copy-Item -Path pubspec.yaml -Destination ..\backup\
         Copy-Item -Path lib -Recurse -Destination ..\backup\
 
-    # ساخت پروژه‌ی بومی سی‌پلاس‌پلاس ویندوز به صورت خودکار در سرور
+    # ساخت پروژه‌ی بومی سی‌پلاس‌پلاس ویندوز با تعریف نام استاندارد پروژه
     - name: Recreate Windows Platform Files
-      run: flutter create --platforms=windows --org com.rezamxc .
+      run: flutter create --platforms=windows --org com.rezamxc --project-name quran_leitner_app .
 
     # بازگردانی فایل‌های اختصاصی شما در محیط پاورشل
     - name: Restore Custom Files (Windows)

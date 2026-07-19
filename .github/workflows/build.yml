@@ -22,25 +22,30 @@ jobs:
     - name: Set up Flutter
       uses: subosito/flutter-action@v2
       with:
-        flutter-version: '3.19.x'
+        channel: 'stable' # تغییر به آخرین نسخه پایدار جهت سازگاری با اندروید ۱۵
 
-    # ایجاد نسخه پشتیبان از کدهای اختصاصی شما قبل از تولید مجدد پروژه
+    # ایجاد نسخه پشتیبان از کدهای اختصاصی شما
     - name: Backup Custom Files
       run: |
         mkdir -p ../backup
         cp pubspec.yaml ../backup/
         cp -r lib ../backup/
 
-    # ساخت فایل‌های سیستمی و گریدل اندروید به صورت خودکار با تعریف نام استاندارد پروژه
+    # ساخت فایل‌های سیستمی گریدل اندروید به صورت خودکار
     - name: Recreate Android Platform Files
       run: flutter create --platforms=android --org com.rezamxc --project-name quran_leitner_app .
 
-    # بازگردانی فایل‌های اختصاصی شما روی کدهای سیستمی خام
+    # بازگردانی فایل‌های اختصاصی شما روی کدهای سیستمی
     - name: Restore Custom Files
       run: |
         cp ../backup/pubspec.yaml .
         rm -rf lib
         cp -r ../backup/lib .
+
+    # رفع تداخل کامپایلر AAPT2 با اندروید ۱۵ (SDK 35) با تزریق مستقیم شناسه جدید
+    - name: Configure AAPT2 for Android 15 (SDK 35)
+      run: |
+        echo "android.aapt2Version=8.6.1-11315950" >> android/gradle.properties
 
     - name: Install Dependencies
       run: flutter pub get
@@ -63,7 +68,7 @@ jobs:
     - name: Set up Flutter
       uses: subosito/flutter-action@v2
       with:
-        flutter-version: '3.19.x'
+        channel: 'stable' # تغییر به نسخه پایدار برای پشتیبانی بومی از Visual Studio 2022
 
     # نسخه پشتیبان برای ویندوز در محیط پاورشل
     - name: Backup Custom Files (Windows)
@@ -73,7 +78,7 @@ jobs:
         Copy-Item -Path pubspec.yaml -Destination ..\backup\
         Copy-Item -Path lib -Recurse -Destination ..\backup\
 
-    # ساخت پروژه‌ی بومی سی‌پلاس‌پلاس ویندوز با تعریف نام استاندارد پروژه
+    # ساخت پروژه‌ی بومی سی‌پلاس‌پلاس ویندوز
     - name: Recreate Windows Platform Files
       run: flutter create --platforms=windows --org com.rezamxc --project-name quran_leitner_app .
 

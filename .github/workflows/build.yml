@@ -1,47 +1,60 @@
-name: Auto Build Executable
+name: Build Flutter Android & Windows
 
 on:
   push:
     branches:
       - main
-    tags:
-      - 'v*'
-  workflow_dispatch: 
+  workflow_dispatch:
 
 jobs:
-  build:
-    runs-on: windows-latest
-
+  build-android:
+    runs-on: ubuntu-latest
     steps:
     - name: Checkout Repository
       uses: actions/checkout@v4
 
-    - name: Set up Python
-      uses: actions/setup-python@v5
+    - name: Set up Java
+      uses: actions/setup-java@v4
       with:
-        python-version: '3.10'
+        distribution: 'temurin'
+        java-version: '17'
+
+    - name: Set up Flutter
+      uses: subosito/flutter-action@v2
+      with:
+        flutter-version: '3.19.x'
 
     - name: Install Dependencies
-      run: |
-        python -m pip install --upgrade pip
-        pip install requests pygame pyinstaller
+      run: flutter pub get
 
-    - name: Build Executable with PyInstaller
-      run: |
-        pyinstaller --onefile --noconsole --name="QuranPageQuizApp" main.py
+    - name: Build Android APK
+      run: flutter build apk --release
 
-  
-    - name: Upload Build Artifact
+    - name: Upload Android APK
       uses: actions/upload-artifact@v4
       with:
-        name: QuranQuizApp-Windows-Exe
-        path: dist/QuranPageQuizApp.exe
+        name: QuranQuiz-Android-APK
+        path: build/app/outputs/flutter-apk/app-release.apk
 
+  build-windows:
+    runs-on: windows-latest
+    steps:
+    - name: Checkout Repository
+      uses: actions/checkout@v4
 
-    - name: Create Release and Upload Artifact
-      if: startsWith(github.ref, 'refs/tags/')
-      uses: softprops/action-gh-release@v2
+    - name: Set up Flutter
+      uses: subosito/flutter-action@v2
       with:
-        files: dist/QuranPageQuizApp.exe
-      env:
-        GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+        flutter-version: '3.19.x'
+
+    - name: Install Dependencies
+      run: flutter pub get
+
+    - name: Build Windows Executable
+      run: flutter build windows --release
+
+    - name: Upload Windows Executable
+      uses: actions/upload-artifact@v4
+      with:
+        name: QuranQuiz-Windows-EXE
+        path: build/windows/x64/runner/Release/

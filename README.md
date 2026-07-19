@@ -1,42 +1,38 @@
-name: Auto Build Executable
+# 🕋 Quran Juz 30 Memorization & Leitner System
+> An interactive educational desktop application to help memorize, review, and master the 30th Juz of the Holy Quran using active recall, spaced repetition, and multiple test modes.
 
-on:
-  push:
-    branches:
-      - main
-  workflow_dispatch:
+---
 
-jobs:
-  build:
-    runs-on: windows-latest
+## 🌍 Lang / زبان / اللغة
+* [English](#english)
+* [فارسی](#فارسی)
+* [العربية](#العربية)
 
-    steps:
-    - name: Checkout Repository
-      uses: actions/checkout@v4
+---
 
-    - name: Set up Python
-      uses: actions/setup-python@v5
-      with:
-        python-version: '3.10'
+## English
 
-    - name: Install Dependencies
-      run: |
-        python -m pip install --upgrade pip
-        pip install requests pygame pyinstaller
+### ✨ Features
+* **Interactive Drag & Drop:** Arrange Quran verses physically on the screen to boost spatial memory.
+* **Leitner Spaced Repetition:** Verses you struggle with are shown more frequently based on Leitner intervals.
+* **Multiple Game Modes:**
+  * Surah Page Layout
+  * Guess Neighboring Verses
+  * Fill in the Missing Blank
+  * Comprehensive Graded Surah Exams
+  * Reverse Audio Exam (Blind matching)
+* **Audio Recitations:** Automatic background downloading and playback of high-quality audio files by *Sheikh Khalil Al-Husary*.
+* **Bookmarking (⭐):** Keep track of difficult verses for targeted, custom practice.
+* **Exam History & Grade Tracking:** Dynamic grade reporting after exams (out of 20).
+* **Multi-Language Support:** Seamlessly switch between Persian, English, and Arabic interfaces.
 
-    - name: Build Executable with PyInstaller
-      run: |
-        pyinstaller --onefile --noconsole --name="QuranPageQuizApp" main.py
+### 🚀 Getting Started
+#### Requirements
+* Python 3.8+
+* Active Internet Connection (only on first runs to fetch data and audio files)
 
-    # ایجاد یا بروزرسانی مداوم نسخه انتشار با نام latest در بخش Releases
-    - name: Update Latest Release
-      uses: softprops/action-gh-release@v2
-      with:
-        tag_name: latest
-        name: "Latest Auto-Build"
-        body: "Automated build of the latest commit on main branch."
-        draft: false
-        prerelease: false
-        files: dist/QuranPageQuizApp.exe
-      env:
-        GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+#### Installation
+1. Clone the repository:
+   ```bash
+   git clone https://github.com/rezamxc/Quran-Juz-30-Memorization-Leitner-System.git
+   cd Quran-Juz-30-Memorization-Leitner-System

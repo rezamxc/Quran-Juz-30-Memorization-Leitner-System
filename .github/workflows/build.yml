@@ -24,6 +24,24 @@ jobs:
       with:
         flutter-version: '3.19.x'
 
+    # ایجاد نسخه پشتیبان از کدهای اختصاصی شما قبل از تولید مجدد پروژه
+    - name: Backup Custom Files
+      run: |
+        mkdir -p ../backup
+        cp pubspec.yaml ../backup/
+        cp -r lib ../backup/
+
+    # ساخت فایل‌های سیستمی و گریدل اندروید به صورت خودکار در سرور گیت‌هاب
+    - name: Recreate Android Platform Files
+      run: flutter create --platforms=android --org com.rezamxc .
+
+    # بازگردانی فایل‌های اختصاصی شما روی کدهای سیستمی خام
+    - name: Restore Custom Files
+      run: |
+        cp ../backup/pubspec.yaml .
+        rm -rf lib
+        cp -r ../backup/lib .
+
     - name: Install Dependencies
       run: flutter pub get
 
@@ -46,6 +64,26 @@ jobs:
       uses: subosito/flutter-action@v2
       with:
         flutter-version: '3.19.x'
+
+    # نسخه پشتیبان برای ویندوز در محیط پاورشل
+    - name: Backup Custom Files (Windows)
+      shell: powershell
+      run: |
+        New-Item -ItemType Directory -Force -Path ..\backup
+        Copy-Item -Path pubspec.yaml -Destination ..\backup\
+        Copy-Item -Path lib -Recurse -Destination ..\backup\
+
+    # ساخت پروژه‌ی بومی سی‌پلاس‌پلاس ویندوز به صورت خودکار در سرور
+    - name: Recreate Windows Platform Files
+      run: flutter create --platforms=windows --org com.rezamxc .
+
+    # بازگردانی فایل‌های اختصاصی شما در محیط پاورشل
+    - name: Restore Custom Files (Windows)
+      shell: powershell
+      run: |
+        Copy-Item -Path ..\backup\pubspec.yaml -Destination . -Force
+        Remove-Item -Path lib -Recurse -Force
+        Copy-Item -Path ..\backup\lib -Recurse -Destination . -Force
 
     - name: Install Dependencies
       run: flutter pub get

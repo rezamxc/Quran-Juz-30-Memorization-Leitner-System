@@ -3,9 +3,10 @@
 
 ---
 
-## 🌍 Lang / زبان
+## 🌍 Lang / زبان / اللغة
 * [English](#english)
 * [فارسی](#فارسی)
+* [العربية](#العربية)
 
 ---
 
@@ -23,7 +24,7 @@
 * **Audio Recitations:** Automatic background downloading and playback of high-quality audio files by *Sheikh Khalil Al-Husary*.
 * **Bookmarking (⭐):** Keep track of difficult verses for targeted, custom practice.
 * **Exam History & Grade Tracking:** Dynamic grade reporting after exams (out of 20).
-* **Multi-Language Support:** Seamlessly switch between Persian and English interfaces.
+* **Multi-Language Support:** Seamlessly switch between Persian, English, and Arabic interfaces.
 
 ### 🚀 Getting Started
 #### Requirements
@@ -33,5 +34,5 @@
 #### Installation
 1. Clone the repository:
    ```bash
-   git clone https://github.com/YOUR_USERNAME/quran-memorization-system.git
-   cd quran-memorization-system
+   git clone https://github.com/rezamxc/Quran-Juz-30-Memorization-Leitner-System.git
+   cd Quran-Juz-30-Memorization-Leitner-System

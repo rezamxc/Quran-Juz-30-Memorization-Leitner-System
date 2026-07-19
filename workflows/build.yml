@@ -1,9 +1,12 @@
-name: Build and Release Executable
+name: Auto Build Executable
 
 on:
   push:
+    branches:
+      - main
     tags:
-      - 'v*' 
+      - 'v*'
+  workflow_dispatch: 
 
 jobs:
   build:
@@ -27,7 +30,16 @@ jobs:
       run: |
         pyinstaller --onefile --noconsole --name="QuranPageQuizApp" main.py
 
+  
+    - name: Upload Build Artifact
+      uses: actions/upload-artifact@v4
+      with:
+        name: QuranQuizApp-Windows-Exe
+        path: dist/QuranPageQuizApp.exe
+
+
     - name: Create Release and Upload Artifact
+      if: startsWith(github.ref, 'refs/tags/')
       uses: softprops/action-gh-release@v2
       with:
         files: dist/QuranPageQuizApp.exe

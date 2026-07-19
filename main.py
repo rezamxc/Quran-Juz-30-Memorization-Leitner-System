@@ -463,6 +463,32 @@ class QuranPageQuizApp:
         self.mode_combobox.config(values=self.loc.get("modes"))
         self.mode_combobox.current(current_mode_idx)
 
+    def on_start_click(self):
+        selected_mode = self.mode_combobox.current()
+        selected_index = self.surah_combobox.current()
+        surah_keys = list(self.surahs.keys())
+        selected_key = surah_keys[selected_index]
+        self.current_verses = self.surahs[selected_key]['verses']
+        self.is_exam_mode = False
+
+        if selected_mode == 0:
+            self.load_page_data()
+        elif selected_mode == 1:
+            self.start_neighbors_quiz()
+        elif selected_mode == 2:
+            self.start_completion_quiz()
+        elif selected_mode == 3:
+            self.is_exam_mode = True
+            self.start_comprehensive_exam()
+        elif selected_mode == 4:
+            self.load_page_data(reverse_audio=True)
+        elif selected_mode == 5:
+            self.start_leitner_quiz()
+        elif selected_mode == 6:
+            self.start_bookmarked_quiz()
+        elif selected_mode == 7:
+            self.show_exam_history()
+
     # ------------------ بازی حالت اول و پنجم: صفحه آرایی / صوتی معکوس ------------------
     def load_page_data(self, reverse_audio=False):
         self.audio_manager.stop()

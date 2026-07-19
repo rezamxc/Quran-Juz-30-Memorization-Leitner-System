@@ -1,0 +1,17 @@
+# Python
+__pycache__/
+*.py[cod]
+*$py.class
+*.venv
+venv/
+ENV/
+
+# Project Cache & Storage
+audio_cache/
+juz30.json
+user_progress.json
+
+# PyInstaller / Build
+build/
+dist/
+*.spec
